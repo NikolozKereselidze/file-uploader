@@ -1,9 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
+import { passport } from "../auth/passportConfig";
 const prisma = new PrismaClient();
 
-async function createUser(req: Request, res: Response) {
+export async function createUser(req: Request, res: Response) {
   const { email, password } = req.body;
   try {
     const user = await prisma.user.create({
@@ -20,4 +21,11 @@ async function createUser(req: Request, res: Response) {
       res.status(400).json({ error: "An unknown error occurred" });
     }
   }
+}
+
+export function loginUser(req: Request, res: Response, next: NextFunction) {
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login",
+  })(req, res, next);
 }

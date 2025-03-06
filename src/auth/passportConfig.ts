@@ -45,3 +45,5 @@ passport.deserializeUser(async (id: string, done) => {
     done(err, null);
   }
 });
+
+export { passport };

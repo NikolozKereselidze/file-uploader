@@ -9,8 +9,10 @@ const prisma = new PrismaClient();
 const app = express();
 
 app.set("view engine", "ejs");
-
 app.set("views", "src/views");
+
+app.use(express.urlencoded({ extended: true })); // To parse URL-encoded bodies
+app.use(express.json()); // To parse JSON bodies
 
 app.use(
   expressSession({
