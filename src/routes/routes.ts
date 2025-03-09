@@ -1,6 +1,10 @@
 import express, { Request, Response } from "express";
 import { createUser, loginUser } from "../controllers/userController";
-import { createFolder } from "../controllers/folderController";
+import {
+  createFolder,
+  deleteFolder,
+  getFolders,
+} from "../controllers/folderController";
 const router = express.Router();
 
 const multer = require("multer");
@@ -26,6 +30,8 @@ router.post("/upload", upload.single("file"), (req: Request, res: Response) => {
 
 router.post("/new-folder", createFolder);
 
+router.post("/folder/:id", deleteFolder);
+
 router.post("/logout", function (req, res, next) {
   console.log("hello");
   req.logout(function (err) {
@@ -36,10 +42,11 @@ router.post("/logout", function (req, res, next) {
   });
 });
 
-router.get("/", (req: Request, res: Response) => {
+router.get("/", async (req: Request, res: Response) => {
   {
     if (req.user) {
-      res.render("index");
+      const folders = await getFolders(req, res);
+      res.render("index", { folders });
     } else {
       res.redirect("/login");
     }

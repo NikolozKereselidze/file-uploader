@@ -28,7 +28,6 @@ model File {
 model Folder {
   id String @id @default(uuid())
   name String
-  path String
   userId String
   user User @relation(fields: [userId], references: [id])
   files File[]

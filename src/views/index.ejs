@@ -7,7 +7,13 @@
   </head>
   <body>
     <form action="/new-folder" method="post">
-      <input type="text" name="name" placeholder="Folder Name" required />
+      <input
+        type="text"
+        name="name"
+        placeholder="Folder Name"
+        required
+        autocomplete="on"
+      />
       <button type="submit">Create Folder</button>
     </form>
 
@@ -19,5 +25,12 @@
     <form action="/logout" method="post">
       <button type="submit">Log out</button>
     </form>
+
+    <% folders.forEach(folder => { %>
+    <h4><%= folder.name %></h4>
+    <form action="/folder/<%= folder.id %>?_method=DELETE" method="post">
+      <button type="submit">Delete</button>
+    </form>
+    <% }) %>
   </body>
 </html>
