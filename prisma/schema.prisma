@@ -11,7 +11,24 @@ model User {
   id String @id @default(uuid())
   email String @unique
   password String
-  cretedAt DateTime @default(now())
+  file File[]
+  folder Folder[]
+}
+
+model File {
+  id String @id @default(uuid())
+  name String
+  path String
+  user User @relation(fields: [userId], references: [id])
+  userId String
+}
+
+model Folder {
+  id String @id @default(uuid())
+  name String
+  path String
+  userId String
+  user User @relation(fields: [userId], references: [id])
 }
 
 model Session {
