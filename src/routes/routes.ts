@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import { createUser, loginUser } from "../controllers/userController";
+import { createFolder } from "../controllers/folderController";
 const router = express.Router();
 
 const multer = require("multer");
@@ -22,6 +23,8 @@ router.post("/upload", upload.single("file"), (req: Request, res: Response) => {
   console.log("done"); // The uploaded file information
   res.redirect("/");
 });
+
+router.post("/new-folder", createFolder);
 
 router.post("/logout", function (req, res, next) {
   console.log("hello");

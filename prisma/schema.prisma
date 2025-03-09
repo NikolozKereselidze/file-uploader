@@ -19,6 +19,8 @@ model File {
   id String @id @default(uuid())
   name String
   path String
+  folder Folder @relation(fields: [folderId], references: [id])
+  folderId String
   user User @relation(fields: [userId], references: [id])
   userId String
 }
@@ -29,6 +31,7 @@ model Folder {
   path String
   userId String
   user User @relation(fields: [userId], references: [id])
+  files File[]
 }
 
 model Session {
